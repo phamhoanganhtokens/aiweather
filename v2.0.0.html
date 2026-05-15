@@ -18,6 +18,7 @@
                         neonCyan: '#00f5ff',
                         neonPurple: '#c026d3',
                         goldAccent: '#facc15',
+                        charcoal: '#1A1A1A',
                         glass: 'rgba(17, 25, 40, 0.4)',
                     },
                     fontFamily: {
@@ -25,6 +26,21 @@
                         hero: ['"Times New Roman"', 'serif'],
                         body: ['Inter', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            'from': { textShadow: '0 0 10px #00f5ff, 0 0 20px #00f5ff' },
+                            'to': { textShadow: '0 0 20px #c026d3, 0 0 40px #c026d3' },
+                        }
                     }
                 }
             }
@@ -63,9 +79,16 @@
             letter-spacing: -0.05em;
         }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #0a0a1f; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2D2D2D; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0a1f;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2D2D2D;
+            border-radius: 10px;
+        }
 
         .bento-grid {
             display: grid;
@@ -74,16 +97,48 @@
             gap: 1.5rem;
         }
 
-        @media (max-width: 1024px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 640px) { .bento-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-block {
+            background: #1e1e2e;
+            border-left: 4px solid #c026d3;
+        }
 
         #bg-video {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             z-index: -2;
             filter: grayscale(20%) brightness(0.45);
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 245, 255, 0.08), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
         }
 
         .section-number {
@@ -97,38 +152,6 @@
             color: #00f5ff;
             pointer-events: none;
         }
-
-        #scroll-progress {
-            position: fixed;
-            top: 80px;
-            left: 30px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: #00f5ff;
-            z-index: 999;
-            text-shadow: 0 0 10px #00f5ff;
-        }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px; height: 50px;
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid #00f5ff;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            z-index: 999;
-            transition: all 0.3s ease;
-        }
-        #back-to-top:hover {
-            background: #00f5ff;
-            color: #0a0a1f;
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body class="font-body custom-scrollbar">
@@ -137,10 +160,7 @@
     <video id="bg-video" autoplay loop muted playsinline>
         <source src="https://huggingface.co/datasets/phamhoanganh/video/resolve/main/aurora.mp4" type="video/mp4">
     </video>
-    <div class="video-overlay fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.08),transparent_70%)] z-[-1] pointer-events-none"></div>
-
-    <!-- Scroll Progress -->
-    <div id="scroll-progress">0%</div>
+    <div class="video-overlay"></div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 w-full z-[100] px-6 py-4 flex justify-between items-center liquid-glass">
@@ -148,23 +168,28 @@
             <span class="font-brand text-xl font-black tracking-tighter uppercase italic text-white">AI Software Development</span>
         </div>
         
-        <div id="real-time-clock" class="hidden md:block font-mono text-[10px] tracking-[0.3em] text-neonCyan opacity-80"></div>
+        <div id="real-time-clock" class="hidden md:block font-mono text-[10px] tracking-[0.3em] text-neonCyan opacity-80">
+            00/00/0000 - 00:00:00
+        </div>
 
         <div class="flex items-center gap-4">
-            <button onclick="document.getElementById('activation').scrollIntoView({ behavior: 'smooth' })" 
+            <a href="https://phamhoanganhtokens.github.io/truongtho/aisoftwaredevelopment.html" target="_blank" class="text-[10px] uppercase tracking-widest hover:text-neonCyan transition-colors opacity-60 hidden sm:block">
+                Cổng Nhà Phát Triển
+            </a>
+            <button onclick="window.location.href='https://www.phamhoanganhtokens.com'" 
                     class="px-5 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-cosmic transition-all duration-500 font-brand">
-                KHỞI TẠO HỆ THỐNG
+                Khởi Tạo Hệ Thống
             </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden px-6 content-wrapper">
         <div class="relative z-10 max-w-6xl w-full text-center lg:text-left">
             <p class="font-mono text-neonCyan text-xs uppercase tracking-[0.6em] mb-6 animate-pulse">
                 Trạng Thái Hệ Thống: AI Dự Báo Thời Tiết Đang Hoạt Động
             </p>
-            <h1 class="hero-title text-6xl md:text-8xl lg:text-9xl text-white leading-[0.85] mb-10">
+            <h1 class="hero-title text-6xl md:text-8xl lg:text-9xl text-white leading-[0.85] mb-10 transition-all">
                 AI DỰ BÁO<br>
                 <span class="gradient-text">THỜI TIẾT</span>
             </h1>
@@ -174,17 +199,21 @@
                     <p class="text-lg md:text-xl font-light text-gray-300 leading-relaxed uppercase tracking-wide">
                         Ứng dụng Trí tuệ Nhân tạo • Phân tích đa nguồn dữ liệu thời gian thực • Dự báo chính xác cao
                     </p>
-                    <p class="mt-4 text-sm text-gray-400 uppercase tracking-widest leading-loose opacity-80">
-                        Hệ thống AI Agent thông minh tổng hợp dữ liệu từ nhiều nguồn uy tín, phân tích sâu và đưa ra dự báo thời tiết chi tiết, đáng tin cậy.
+                    <p class="mt-4 text-sm text-gray-400 uppercase tracking-widest leading-loose text-justify opacity-80">
+                        Hệ thống AI Agent thông minh tổng hợp dữ liệu từ nhiều nguồn uy tín, phân tích sâu và đưa ra dự báo thời tiết chi tiết, đáng tin cậy cho mọi nhu cầu.
                     </p>
                 </div>
                 
                 <div class="flex flex-col gap-4">
-                    <a href="https://zoom.earth/" target="_blank" class="flex items-center gap-4 group cursor-pointer">
+                    <!-- Nút mới -->
+                    <a href="https://zoom.earth/" target="_blank" 
+                       class="flex items-center gap-4 group cursor-pointer">
                         <div class="w-12 h-[1px] bg-white/20 group-hover:w-16 group-hover:bg-neonCyan transition-all"></div>
                         <span class="text-[10px] uppercase tracking-[0.4em] opacity-50 group-hover:opacity-100">Bản Đồ Thời Tiết Thời Gian Thực</span>
                     </a>
-                    <a href="https://www.windy.com/" target="_blank" class="flex items-center gap-4 group cursor-pointer">
+                    
+                    <a href="https://www.windy.com/" target="_blank" 
+                       class="flex items-center gap-4 group cursor-pointer">
                         <div class="w-12 h-[1px] bg-white/20 group-hover:w-16 group-hover:bg-neonPurple transition-all"></div>
                         <span class="text-[10px] uppercase tracking-[0.4em] opacity-50 group-hover:opacity-100">Phân Tích Gió & Mưa</span>
                     </a>
@@ -192,6 +221,7 @@
             </div>
         </div>
 
+        <!-- Scroll Indicator -->
         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
             <span class="text-[8px] uppercase tracking-[0.5em] text-white/40">Cuộn để khám phá</span>
             <div class="w-[1px] h-12 bg-gradient-to-b from-neonCyan to-transparent"></div>
@@ -199,7 +229,7 @@
     </section>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-24 space-y-32">
+    <main class="max-w-7xl mx-auto px-6 py-24 space-y-32 content-wrapper">
 
         <!-- Section 1 -->
         <section id="mechanism" class="space-y-12 relative">
@@ -209,13 +239,23 @@
                     <h2 class="font-brand text-3xl md:text-5xl font-black uppercase tracking-tighter">Cơ Chế AI</h2>
                     <p class="text-neonCyan font-mono text-xs mt-2 uppercase tracking-widest">Phần 01 // Hệ Thống Đa Agent</p>
                 </div>
-                <p class="max-w-md text-sm text-gray-400 text-right italic">"Dự báo chính xác bắt nguồn từ việc phân tích thông minh đa nguồn dữ liệu."</p>
+                <p class="max-w-md text-sm text-gray-400 text-right italic font-serif">
+                    "Dự báo chính xác bắt nguồn từ việc phân tích thông minh đa nguồn dữ liệu."
+                </p>
             </div>
 
             <div class="bento-grid">
                 <div class="col-span-1 lg:col-span-2 row-span-2 liquid-glass rounded-3xl p-8 flex flex-col justify-between group overflow-hidden relative">
-                    <h3 class="text-2xl font-brand uppercase mb-4">Hệ Thống Master Agent</h3>
-                    <p class="text-gray-400 leading-relaxed">Master AI điều phối nhiều Slave Agents chuyên trách, thu thập và tổng hợp dữ liệu từ NCHMF, ECMWF, AccuWeather, Windy...</p>
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
+                        <svg width="200" height="200" viewBox="0 0 200 200" class="telomere-glow">
+                            <circle cx="100" cy="100" r="80" stroke="#00f5ff" fill="none" stroke-width="2"/>
+                            <circle cx="100" cy="100" r="50" stroke="#c026d3" fill="none" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-brand uppercase mb-4 text-white">Hệ Thống Master Agent</h3>
+                        <p class="text-gray-400 leading-relaxed">Master AI điều phối nhiều Slave Agents chuyên trách, thu thập và tổng hợp dữ liệu từ các nguồn uy tín như NCHMF, ECMWF, AccuWeather, Windy…</p>
+                    </div>
                     <div class="mt-12">
                         <div class="flex justify-between items-end">
                             <span class="text-4xl font-brand font-black text-neonCyan">99.1%</span>
@@ -228,18 +268,20 @@
                 </div>
 
                 <div class="col-span-1 lg:col-span-2 liquid-glass rounded-3xl p-8 border-l-4 border-neonPurple">
-                    <h3 class="text-xl font-brand uppercase mb-2">Dự Báo Thời Gian Thực</h3>
-                    <p class="text-sm text-gray-400">Hệ thống AI liên tục cập nhật dữ liệu vệ tinh, radar và mô hình khí tượng.</p>
+                    <h3 class="text-xl font-brand uppercase mb-2 text-white">Dự Báo Thời Gian Thực</h3>
+                    <p class="text-sm text-gray-400">Hệ thống AI liên tục cập nhật dữ liệu vệ tinh, radar thời tiết, mô hình khí tượng và đưa ra dự báo chi tiết theo giờ và theo ngày.</p>
                 </div>
 
                 <div class="col-span-1 liquid-glass rounded-3xl p-8 flex flex-col justify-center items-center text-center">
+                    <span class="text-xs font-mono text-goldAccent mb-2 uppercase">Độ Chính Xác</span>
                     <span class="text-3xl font-brand text-white">7 NGÀY</span>
-                    <p class="text-[10px] text-gray-500 mt-2">Dự báo ngắn hạn</p>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-tighter">Dự báo ngắn hạn</p>
                 </div>
 
                 <div class="col-span-1 liquid-glass rounded-3xl p-8 flex flex-col justify-center items-center text-center bg-neonPurple/5">
+                    <span class="text-xs font-mono text-neonCyan mb-2 uppercase">Phạm Vi Phân Tích</span>
                     <span class="text-3xl font-brand text-white">30 NGÀY</span>
-                    <p class="text-[10px] text-gray-500 mt-2">Xu hướng trung hạn</p>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-tighter">Xu hướng trung hạn</p>
                 </div>
             </div>
         </section>
@@ -251,23 +293,47 @@
                 <div class="inline-block px-4 py-1 rounded-full border border-neonCyan/30 text-neonCyan text-[10px] font-mono uppercase tracking-[0.2em]">
                     HỆ THỐNG AI AGENT
                 </div>
-                <h2 class="font-brand text-4xl md:text-5xl font-black uppercase leading-tight">Trí Tuệ Nhân Tạo<br><span class="text-neonPurple">Dự Báo Thời Tiết</span></h2>
-                <p class="text-gray-400 leading-relaxed">Hệ thống sử dụng nhiều lớp AI Agent chuyên trách, kết hợp dữ liệu vệ tinh, mô hình khí hậu và học máy để đưa ra dự báo chính xác nhất.</p>
-                <button onclick="window.open('https://phamhoanganhtokens.github.io/aiweather/khanhhoa.html', '_blank')" 
-                        class="flex items-center gap-4 bg-white text-cosmic font-brand font-black px-8 py-4 uppercase text-xs tracking-widest hover:bg-neonCyan transition-colors">
-                    TRUY CẬP HỆ THỐNG
-                    <span>→</span>
-                </button>
+                <h2 class="font-brand text-4xl md:text-5xl font-black uppercase leading-tight text-white">Trí Tuệ Nhân Tạo<br><span class="text-neonPurple">Dự Báo Thời Tiết</span></h2>
+                <div class="space-y-6 text-gray-400">
+                    <p class="leading-relaxed">Hệ thống sử dụng nhiều lớp AI Agent chuyên trách, kết hợp dữ liệu vệ tinh, mô hình khí hậu và học máy để đưa ra dự báo chính xác và dễ hiểu nhất.</p>
+                </div>
+                <div class="pt-6">
+                    <button onclick="window.open('https://phamhoanganhtokens.github.io/aiweather/khanhhoa.html', '_blank')" 
+                            class="flex items-center gap-4 bg-white text-cosmic font-brand font-black px-8 py-4 uppercase text-xs tracking-widest hover:bg-neonCyan transition-colors">
+                        TRUY CẬP HỆ THỐNG
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="code-block rounded-2xl overflow-hidden shadow-2xl shadow-neonPurple/20">
-                <pre class="p-6 text-xs md:text-sm font-mono text-gray-300 overflow-x-auto"><code>const WeatherMasterAI = () => {
-  fetchRealTimeData();
-  analyzeSatellite();
-  runClimateModels();
-  
-  return <ForecastReport accuracy="high" horizon="30days" />;
+            <!-- Code Block -->
+            <div class="relative">
+                <div class="code-block rounded-2xl overflow-hidden shadow-2xl shadow-neonPurple/20">
+                    <div class="px-6 py-4 bg-white/5 border-b border-white/10 flex justify-between items-center">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <span class="font-mono text-[10px] uppercase text-gray-500 tracking-widest">WeatherAI Agent</span>
+                    </div>
+                    <pre class="p-6 text-xs md:text-sm font-mono overflow-x-auto text-gray-300 leading-relaxed custom-scrollbar">
+<code><span class="text-neonPurple">const</span> <span class="text-neonCyan">WeatherMasterAI</span> = () => {
+  <span class="text-gray-500">// Thu thập dữ liệu từ nhiều nguồn</span>
+  useEffect(() => {
+    fetchRealTimeData();
+    analyzeSatellite();
+    runClimateModels();
+  }, []);
+
+  <span class="text-neonPurple">return</span> (
+    &lt;<span class="text-neonCyan">ForecastReport</span> 
+      accuracy="high"
+      horizon="30days"
+    /&gt;
+  );
 };</code></pre>
+                </div>
             </div>
         </section>
 
@@ -276,102 +342,83 @@
             <div class="section-number">03</div>
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <h2 class="font-brand text-3xl font-bold uppercase tracking-widest mb-4">Công Cụ Hỗ Trợ Phân Tích</h2>
-                <p class="text-sm text-gray-400">Truy cập các nền tảng thời tiết chuyên sâu</p>
+                <p class="text-sm text-gray-400">Truy cập các nền tảng thời tiết chuyên sâu để quan sát trực quan</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <div onclick="window.open('https://zoom.earth/', '_blank')" class="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-neonCyan/50 transition-all cursor-pointer text-center">
-                    <span class="text-4xl mb-4 block">🛰️</span>
-                    <p class="font-brand">Zoom.Earth</p>
-                    <p class="text-xs text-gray-500">Bản đồ vệ tinh thời gian thực</p>
+                <div onclick="window.open('https://zoom.earth/', '_blank')" 
+                     class="col-span-1 bg-white/5 rounded-2xl p-6 border border-white/10 flex flex-col items-center justify-center gap-6 group hover:border-neonCyan/50 transition-colors cursor-pointer">
+                    <div class="w-16 h-16 rounded-full bg-neonCyan/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <span class="text-3xl">🛰️</span>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-brand text-sm uppercase tracking-widest text-white">Zoom.Earth</p>
+                        <p class="text-[10px] font-mono text-gray-500 mt-1">Bản đồ vệ tinh thời gian thực</p>
+                    </div>
                 </div>
-                <div onclick="window.open('https://www.windy.com/', '_blank')" class="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-neonPurple/50 transition-all cursor-pointer text-center">
-                    <span class="text-4xl mb-4 block">🌬️</span>
-                    <p class="font-brand">Windy.com</p>
-                    <p class="text-xs text-gray-500">Phân tích gió & mô hình thời tiết</p>
+
+                <div onclick="window.open('https://www.windy.com/', '_blank')" 
+                     class="col-span-1 bg-white/5 rounded-2xl p-6 border border-white/10 flex flex-col items-center justify-center gap-6 group hover:border-neonPurple/50 transition-colors cursor-pointer">
+                    <div class="w-16 h-16 rounded-full bg-neonPurple/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <span class="text-3xl">🌬️</span>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-brand text-sm uppercase tracking-widest text-white">Windy.com</p>
+                        <p class="text-[10px] font-mono text-gray-500 mt-1">Phân tích gió & mô hình thời tiết</p>
+                    </div>
+                </div>
+
+                <div class="col-span-1 md:col-span-2 flex flex-col justify-center">
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <span class="text-neonCyan font-mono text-xs">01</span>
+                            <h4 class="font-brand text-sm text-white uppercase mt-2 mb-2">Dữ liệu Vệ tinh</h4>
+                            <p class="text-[11px] text-gray-400 leading-relaxed">Cập nhật liên tục từ nhiều nguồn vệ tinh quốc tế.</p>
+                        </div>
+                        <div>
+                            <span class="text-neonPurple font-mono text-xs">02</span>
+                            <h4 class="font-brand text-sm text-white uppercase mt-2 mb-2">Mô hình AI</h4>
+                            <p class="text-[11px] text-gray-400 leading-relaxed">Phân tích sâu bằng trí tuệ nhân tạo.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- ==================== FOOTER 3 CỘT ==================== -->
-    <footer class="border-t border-white/10 py-16 bg-black/70">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
-
-            <!-- Cột 1: Social Links -->
-            <div>
-                <p class="uppercase text-xs tracking-widest text-gray-400 mb-6">KẾT NỐI VỚI CHÚNG TÔI</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="https://x.com/VGA82017" target="_blank" class="w-11 h-11 flex items-center justify-center border border-white/20 hover:border-neonCyan hover:text-neonCyan rounded-full transition-all">𝕏</a>
-                    <a href="https://www.facebook.com/sphamhoanganhs" target="_blank" class="w-11 h-11 flex items-center justify-center border border-white/20 hover:border-blue-500 hover:text-blue-500 rounded-full transition-all">f</a>
-                    <a href="https://www.youtube.com/@thanlongcoins" target="_blank" class="w-11 h-11 flex items-center justify-center border border-white/20 hover:border-red-500 hover:text-red-500 rounded-full transition-all">▶</a>
-                    <a href="https://t.me/phamhoanganhtokens" target="_blank" class="w-11 h-11 flex items-center justify-center border border-white/20 hover:border-blue-400 hover:text-blue-400 rounded-full transition-all">📨</a>
-                    <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-ho%C3%A0ng-anh-51bb3446" target="_blank" class="w-11 h-11 flex items-center justify-center border border-white/20 hover:border-blue-600 hover:text-blue-600 rounded-full transition-all">in</a>
-                </div>
-            </div>
-
-            <!-- Cột 2: Điều hướng nhanh -->
-            <div class="text-center">
-                <p class="uppercase text-xs tracking-widest text-gray-400 mb-6">KHÁM PHÁ</p>
-                <div class="flex flex-col gap-3 text-sm">
-                    <a href="#mechanism" class="hover:text-neonCyan transition-colors">Cơ Chế AI</a>
-                    <a href="#activation" class="hover:text-neonCyan transition-colors">Hệ Thống AI Agent</a>
-                    <a href="#experience" class="hover:text-neonCyan transition-colors">Công Cụ Phân Tích</a>
-                </div>
-            </div>
-
-            <!-- Cột 3: Liên hệ -->
-            <div class="md:text-right">
-                <p class="uppercase text-xs tracking-widest text-gray-400 mb-4">LIÊN HỆ</p>
-                <p class="text-sm leading-relaxed">
-                    Quận Ngon đường 39, Phường Tân Thuận,<br>
-                    Quận 7, TP. Hồ Chí Minh<br><br>
-                    <a href="tel:+84903344551" class="text-neonCyan hover:underline">+84 090 33 44 55 1</a><br>
-                    <a href="https://www.phamhoanganhtokens.com" target="_blank" class="text-neonCyan hover:underline">www.phamhoanganhtokens.com</a>
-                </p>
-            </div>
-        </div>
-
-        <div class="text-center text-[10px] text-gray-500 mt-16 border-t border-white/10 pt-8">
-            © 2026 AI Software Development • Tiên phong ứng dụng Trí tuệ Nhân tạo trong dự báo thời tiết
-        </div>
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500">
+        <p>Báo cáo được tạo bởi AI Software Development - <a href="https://www.phamhoanganhtokens.com" class="hover:text-neonCyan">www.phamhoanganhtokens.com</a></p>
     </footer>
 
-    <!-- Back to Top -->
-    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
-
     <script>
-        // Real-time Clock
+        // Real-time clock
         function updateClock() {
-            const el = document.getElementById('real-time-clock');
+            const clockElement = document.getElementById('real-time-clock');
             const now = new Date();
-            el.textContent = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} - ${now.toLocaleTimeString('vi-VN',{hour12:false})}`;
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const time = now.toLocaleTimeString('vi-VN', { hour12: false });
+            clockElement.textContent = `${day}/${month}/${year} - ${time}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Scroll Progress
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const percent = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
-            document.getElementById('scroll-progress').textContent = percent + '%';
-        });
-
-        // Back to Top
-        const btn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            btn.style.display = window.scrollY > 600 ? 'flex' : 'none';
-        });
-
-        // Smooth scroll animation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
             });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
         });
     </script>
 </body>
