@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Thời Tiết Tổng Hợp - AI Software Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+        :root {
+            --navy: #002147;
+            --charcoal: #333333;
+            --eggshell: #F9F9F9;
+            --slate: #475569;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: var(--eggshell);
+            color: var(--charcoal);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .justify-content {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .premium-border {
+            border-left: 4px solid var(--navy);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 33, 71, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0, 33, 71, 0.2), transparent);
+            margin: 3rem 0;
+        }
+
+        header {
+            background-color: var(--navy);
+            color: white;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        .highlight-bar {
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 100%);
+            border-left: 5px solid #0369a1;
+        }
+
+        .source-text {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#002147',
+                        charcoal: '#333333',
+                        eggshell: '#F9F9F9',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Executive Header -->
+    <header class="w-full py-12 px-6 shadow-xl mb-12">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="uppercase tracking-[0.3em] text-sm opacity-80 mb-2 font-sans">AI Software Development</p>
+            <h1 class="text-4xl md:text-5xl text-white mb-4">BÁO CÁO THỜI TIẾT TỔNG HỢP</h1>
+            <div class="h-1 w-24 bg-yellow-500 mx-auto mb-6"></div>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-lg">
+                <span class="font-bold">Địa điểm: Đà Nẵng, Việt Nam</span>
+                <span class="hidden md:inline opacity-50">|</span>
+                <span>Ngày 15 tháng 05 năm 2026</span>
+                <span class="hidden md:inline opacity-50">|</span>
+                <span id="current-time">08:00 AM (UTC+7)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[900px] mx-auto px-6 pb-24">
+        
+        <!-- Summary Highlight Bar -->
+        <section class="highlight-bar p-6 rounded-r-lg mb-12 shadow-sm animate-fade-in">
+            <div class="flex items-start gap-4">
+                <div class="text-3xl">📢</div>
+                <div>
+                    <h2 class="text-xl mb-1 text-blue-900">Tin vui & Cảnh báo nhanh</h2>
+                    <p class="justify-content text-blue-800">
+                        Nắng nóng gay gắt duy trì diện rộng với chỉ số UV đạt mức 8/12. Cảnh báo khả năng xuất hiện mưa dông cục bộ vào chiều tối do mây đối lưu phát triển mạnh. Cần đặc biệt chú ý an toàn điện và phòng chống cháy rừng.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. Trạng thái hiện tại -->
+        <section class="mb-16">
+            <h2 class="text-2xl border-b-2 border-navy/10 pb-2 mb-8 flex items-center">
+                <span class="mr-3">🌡️</span> 1. TRẠNG THÁI HIỆN TẠI (08:00 AM)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <p class="text-sm uppercase text-gray-500 mb-1">Nhiệt độ</p>
+                    <p class="text-4xl font-bold text-navy">31°C</p>
+                    <p class="text-xs text-gray-400 mt-2">Cảm nhận: 35°C</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <p class="text-sm uppercase text-gray-500 mb-1">Độ ẩm</p>
+                    <p class="text-4xl font-bold text-navy">74%</p>
+                    <p class="text-xs text-gray-400 mt-2">Tầm nhìn: >10km</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg text-center">
+                    <p class="text-sm uppercase text-gray-500 mb-1">Chỉ số UV</p>
+                    <p class="text-4xl font-bold text-red-700">8/12</p>
+                    <p class="text-xs text-gray-400 mt-2">Mức nguy hại cao</p>
+                </div>
+            </div>
+            <div class="mt-6 flex items-center justify-center space-x-8 text-charcoal">
+                <span class="flex items-center"><span class="mr-2">☀️</span> Trời nắng ráo, ít mây</span>
+                <span class="flex items-center"><span class="mr-2">🌬️</span> Gió ĐN: 11 km/h</span>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 2. Dự báo ngắn hạn -->
+        <section class="mb-16">
+            <h2 class="text-2xl border-b-2 border-navy/10 pb-2 mb-8 flex items-center">
+                <span class="mr-3">⏱️</span> 2. DỰ BÁO NGẮN HẠN (24 - 48 GIỜ TỚI)
+            </h2>
+            <div class="space-y-6">
+                <div class="flex flex-col md:flex-row gap-6 items-stretch">
+                    <div class="md:w-1/4 bg-navy text-white p-6 rounded-lg flex flex-col justify-center items-center">
+                        <span class="text-lg">Hôm nay</span>
+                        <span class="text-3xl font-bold">15/05</span>
+                    </div>
+                    <div class="md:w-3/4 justify-content py-2">
+                        <p><strong>Ban ngày:</strong> Nắng nóng gay gắt. Nhiệt độ cao nhất đạt 36°C vào khoảng 13:00 - 14:00. 🌧️ Chiều tối có khả năng xuất hiện mưa rào cục bộ và dông (xác suất 30%) do mây đối lưu phát triển mạnh. 🌙 Đêm không mưa, nhiệt độ giảm xuống còn 27°C.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-6 items-stretch">
+                    <div class="md:w-1/4 bg-slate-200 text-navy p-6 rounded-lg flex flex-col justify-center items-center border border-navy/10">
+                        <span class="text-lg">Ngày mai</span>
+                        <span class="text-3xl font-bold">16/05</span>
+                    </div>
+                    <div class="md:w-3/4 justify-content py-2">
+                        <p>Tiếp tục duy trì hình thái nắng nóng diện rộng. Độ ẩm giảm nhẹ vào giữa trưa khiến cảm giác oi bức gia tăng. Nhiệt độ dao động từ <strong>26°C đến 37°C</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 3. Dự báo hàng tuần -->
+        <section class="mb-16">
+            <h2 class="text-2xl border-b-2 border-navy/10 pb-2 mb-8 flex items-center">
+                <span class="mr-3">📅</span> 3. DỰ BÁO HÀNG TUẦN (15/05 - 22/05)
+            </h2>
+            <p class="mb-6 italic text-gray-600">Trong tuần tới, Đà Nẵng chịu ảnh hưởng của vùng áp thấp nóng phía Tây kết hợp với hiệu ứng phơn.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="premium-border pl-6">
+                    <h3 class="text-xl mb-3">Nửa đầu tuần (15/05 - 18/05)</h3>
+                    <p class="justify-content">
+                        Nắng nóng cao điểm. Nhiệt độ phổ biến từ 35-38°C. Trời hầu như không mưa, độ ẩm thấp nhất vào buổi trưa khoảng 45-55%. Đây là giai đoạn căng thẳng nhất về nhiệt độ trong tuần.
+                    </p>
+                </div>
+                <div class="premium-border pl-6">
+                    <h3 class="text-xl mb-3">Nửa cuối tuần (19/05 - 22/05)</h3>
+                    <p class="justify-content">
+                        Cường độ nắng nóng có xu hướng giảm nhẹ do xuất hiện rãnh thấp có trục đi qua khu vực Trung Trung Bộ. Mưa rào và dông vào chiều tối có thể xảy ra thường xuyên hơn, giúp hạ nhiệt độ xuống mức 32-34°C.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 4. Phân tích hàng tháng -->
+        <section class="mb-16 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <h2 class="text-2xl border-b-2 border-navy/10 pb-2 mb-8 flex items-center">
+                <span class="mr-3">📊</span> 4. PHÂN TÍCH HÀNG THÁNG VÀ XU HƯỚNG MÙA
+            </h2>
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-lg font-bold text-charcoal mb-2 uppercase tracking-wide italic">Phân tích tháng 5:</h3>
+                    <p class="justify-content">
+                        Đây là giai đoạn chuyển tiếp quan trọng tại Đà Nẵng. Thành phố bắt đầu bước vào mùa khô nóng đỉnh điểm trước khi mùa mưa bắt đầu vào cuối quý III. Sự thay đổi áp suất khí quyển diễn ra liên tục, tạo điều kiện cho các khối khí nóng lục địa chiếm ưu thế.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-charcoal mb-2 uppercase tracking-wide flex items-center">
+                        <span class="mr-2">🌬️</span> Quy luật Gió mùa Tây Nam (Southwest Monsoon):
+                    </h3>
+                    <p class="justify-content">
+                        Trong tháng 5, gió mùa Tây Nam bắt đầu hoạt động mạnh dần ở phía Nam và Tây Nguyên. Khi vượt qua dãy Trường Sơn đổ vào khu vực Đà Nẵng, luồng gió này bị biến tính trở nên khô và nóng (hiệu ứng gió Lào). Điều này dẫn đến các đợt nắng nóng kéo dài và độ ẩm không khí xuống thấp kỷ lục trong ngày.
+                    </p>
+                </div>
+                <div class="p-4 bg-orange-50 border-l-4 border-orange-400">
+                    <h3 class="text-lg font-bold text-orange-900 mb-2 uppercase tracking-wide">Xu hướng mùa:</h3>
+                    <p class="justify-content text-orange-900">
+                        Dự kiến năm 2026, hiện tượng biến đổi khí hậu có thể khiến số ngày nắng nóng trên 37°C tại Đà Nẵng cao hơn trung bình nhiều năm. Các hiện tượng thời tiết cực đoan như dông, lốc và sét thường xuất hiện bất ngờ sau các đợt nắng nóng dài ngày.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 5. Lời khuyên thực tế -->
+        <section class="mb-16">
+            <h2 class="text-2xl border-b-2 border-navy/10 pb-2 mb-8 flex items-center">
+                <span class="mr-3">💡</span> 5. LỜI KHUYÊN THỰC TẾ
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-lg">
+                    <h3 class="font-bold mb-4 flex items-center text-navy">
+                        <span class="mr-2">👕</span> Trang phục
+                    </h3>
+                    <ul class="space-y-3 text-sm justify-content">
+                        <li>• Ưu tiên các loại vải tự nhiên, thấm hút mồ hôi tốt như cotton, linen.</li>
+                        <li>• Khi ra ngoài, bắt buộc sử dụng áo khoác nắng, kính râm và kem chống nắng (SPF 50+).</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-6 rounded-lg">
+                    <h3 class="font-bold mb-4 flex items-center text-navy">
+                        <span class="mr-2">🏃</span> Hoạt động
+                    </h3>
+                    <ul class="space-y-3 text-sm justify-content">
+                        <li>• Hạn chế làm việc hoặc hoạt động mạnh ngoài trời trong khung giờ 11:00 - 16:00.</li>
+                        <li>• Các hoạt động du lịch biển nên thực hiện trước 08:00 hoặc sau 17:00.</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-6 rounded-lg">
+                    <h3 class="font-bold mb-4 flex items-center text-navy">
+                        <span class="mr-2">🏥</span> Sức khỏe
+                    </h3>
+                    <ul class="space-y-3 text-sm justify-content">
+                        <li>• Bổ sung nước liên tục (2.5 - 3 lít/ngày). Tăng cường vitamin từ trái cây tươi.</li>
+                        <li>• Cảnh giác với nguy cơ cháy nổ dân cư và cháy rừng do thời tiết khô hanh.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sources Section -->
+        <section class="mt-20 border-t border-gray-200 pt-8">
+            <p class="source-text mb-2">Nguồn dữ liệu phân tích:</p>
+            <div class="flex flex-wrap gap-4 source-text opacity-60">
+                <span>• NCHMF (Trung tâm Dự báo KTTV Quốc gia)</span>
+                <span>• AccuWeather Business Insight</span>
+                <span>• WMO Regional Center</span>
+                <span>• Hệ thống cảm biến IoT Đà Nẵng</span>
+            </div>
+        </section>
+
+        <!-- Signature Footer -->
+        <footer class="mt-24 pt-12 border-t-2 border-navy text-center">
+            <div class="mb-4">
+                <svg class="w-12 h-12 mx-auto text-navy opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275zm-13 0c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275z"/>
+                </svg>
+            </div>
+            <p class="text-navy font-bold tracking-wider mb-2">Báo cáo được tạo bởi AI Software Development</p>
+            <a href="www.phamhoanganhtokens.com" target="_blank" class="text-blue-700 hover:underline transition-all font-sans text-sm">www.phamhoanganhtokens.com</a>
+        </footer>
+
+    </main>
+
+    <script>
+        // Update time display if needed (static for this report based on instructions, but keeping dynamic capability)
+        const updateTime = () => {
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+            // Using a fixed string to match instructions, but can be dynamic:
+            // document.getElementById('current-time').innerText = now.toLocaleTimeString('en-US', options) + " (UTC+7)";
+        };
+        
+        // Add subtle animation delay for cards
+        document.querySelectorAll('.glass-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
