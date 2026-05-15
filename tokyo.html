@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Thời Tiết Tổng Hợp - AI Software Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* Force 'Times New Roman' per instructions for premium document feel */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #F9F9F9;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .justify-content {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .header-navy {
+            background-color: #002147;
+        }
+
+        .accent-gold {
+            color: #C5A059;
+        }
+
+        .section-divider {
+            border-bottom: 1px solid #E5E7EB;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 33, 71, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 640px) {
+            .justify-content {
+                text-align: left;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#002147',
+                        charcoal: '#333333',
+                        slateCustom: '#475569',
+                        gold: '#C5A059',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Executive Header -->
+    <header class="header-navy text-white py-12 px-6 shadow-xl mb-8">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <p class="uppercase tracking-widest text-sm opacity-80 mb-2">AI Software Development</p>
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight">BÁO CÁO THỜI TIẾT TỔNG HỢP</h1>
+            </div>
+            <div class="text-center md:text-right border-l-0 md:border-l border-white/20 md:pl-8">
+                <p class="text-xl font-semibold">Tokyo, Nhật Bản</p>
+                <p class="text-sm opacity-90" id="current-date">Ngày 15 tháng 05 năm 2026 | 10:00 UTC+7</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[900px] mx-auto px-6 pb-24">
+        
+        <!-- Summary Highlight Bar -->
+        <section class="mb-12">
+            <div class="bg-blue-50 border-l-4 border-navy p-6 rounded-r-lg shadow-sm">
+                <h2 class="text-navy font-bold text-lg mb-2 flex items-center">
+                    <span class="mr-2">📢</span> Tin vui / Cảnh báo quan trọng
+                </h2>
+                <p class="text-charcoal italic justify-content">
+                    Tokyo đang bước vào giai đoạn chuyển giao mùa. Lưu ý tình trạng độ ẩm tăng cao và các đợt mưa rào rải rác trong 48 giờ tới. Chuẩn bị cho mùa mưa Tsuyu dự kiến bắt đầu từ đầu tháng 6.
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Report Content -->
+        <article class="bg-white p-8 md:p-12 shadow-sm border border-gray-100 rounded-sm">
+            
+            <!-- Section 1: Hiện trạng -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-navy section-divider flex items-center">
+                    <span class="mr-3 text-xl">🌡️</span> 1. Hiện trạng thời tiết
+                </h2>
+                <p class="justify-content text-lg text-charcoal">
+                    Tại thời điểm hiện tại, Tokyo đang ghi nhận mức nhiệt độ dao động từ <strong>24-25°C</strong> vào ban ngày và giảm xuống <strong>14-15°C</strong> về đêm. Hệ thống khí tượng cho thấy sự bao phủ của các dải mây tầng, gây ra tình trạng trời nhiều mây và có mưa rào nhẹ rải rác. Độ ẩm tương đối đang có xu hướng tăng cao, kết hợp với gió nhẹ tốc độ khoảng 18km/h, tạo cảm giác mát mẻ nhưng bắt đầu có dấu hiệu ẩm ướt.
+                </p>
+            </section>
+
+            <!-- Section 2: Phân tích ngắn hạn -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-navy section-divider flex items-center">
+                    <span class="mr-3 text-xl">⏱️</span> 2. Phân tích ngắn hạn (24-48 giờ tới)
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="glass-card p-5 rounded-lg border-t-4 border-navy">
+                        <h3 class="font-bold text-navy mb-2">Ban ngày</h3>
+                        <p class="text-2xl font-serif">23-25°C</p>
+                        <p class="text-sm text-slate-500 italic">Mây rải rác, khả năng mưa thấp</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-lg border-t-4 border-slate-400">
+                        <h3 class="font-bold text-navy mb-2">Ban đêm</h3>
+                        <p class="text-2xl font-serif">15-16°C</p>
+                        <p class="text-sm text-slate-500 italic">Trời dịu mát, độ ẩm trung bình</p>
+                    </div>
+                </div>
+                <p class="justify-content text-charcoal">
+                    Trạng thái bầu trời chủ đạo là mây rải rác. Tuy nhiên, do sự bất ổn định của các khối khí cục bộ, các cơn mưa rào bất chợt có thể xuất hiện với tần suất thấp nhưng khó dự đoán chính xác về thời điểm.
+                </p>
+            </section>
+
+            <!-- Section 3: Dự báo hàng tuần -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-navy section-divider flex items-center">
+                    <span class="mr-3 text-xl">📅</span> 3. Dự báo hàng tuần (Cuối tháng 05/2026)
+                </h2>
+                <div class="bg-gray-50 p-6 rounded-lg mb-4">
+                    <p class="justify-content text-charcoal mb-4">
+                        Giai đoạn cuối tháng 5, Tokyo sẽ chứng kiến sự chuyển giao rõ rệt hơn. Nhiệt độ dao động trong khoảng 20-25°C (ngày) và 15-20°C (đêm).
+                    </p>
+                    <div class="flex items-center gap-4 border-l-2 border-gold pl-4 py-2 bg-white/50">
+                        <span class="text-2xl">🌧️</span>
+                        <p class="text-sm font-bold uppercase tracking-wide text-navy">Cảnh báo: Tần suất mưa tăng 50% số ngày trong tuần.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4 & 5: Triển vọng & Xu hướng -->
+            <div class="grid md:grid-cols-2 gap-10 mb-12">
+                <section>
+                    <h2 class="text-xl font-bold text-navy section-divider flex items-center">
+                        <span class="mr-2">📈</span> 4. Triển vọng tháng 06
+                    </h2>
+                    <ul class="space-y-4 text-sm justify-content">
+                        <li><span class="font-bold text-navy">Nhiệt độ:</span> Tăng lên ngưỡng 23-28°C ban ngày và 17-22°C ban đêm.</li>
+                        <li><span class="font-bold text-navy">Đặc điểm:</span> Độ ẩm tăng cao tạo trạng thái oi bức (Heat Index tăng mạnh). Cảm giác khó chịu trở nên thường trực.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2 class="text-xl font-bold text-navy section-divider flex items-center">
+                        <span class="mr-2">🌊</span> 5. Xu hướng theo mùa
+                    </h2>
+                    <div class="space-y-4 text-sm">
+                        <p class="justify-content"><span class="font-bold">Mùa mưa Tsuyu:</span> Dự kiến 08/06 - 20/07. Lượng mưa dự báo cao hơn trung bình nhiều năm.</p>
+                        <p class="justify-content"><span class="font-bold">Đỉnh điểm nóng:</span> Tháng 8 cực nóng, nhiệt độ 31-35°C do áp cao Thái Bình Dương.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Section 6: Lời khuyên -->
+            <section class="bg-navy text-white p-8 rounded-xl shadow-inner mb-12">
+                <h2 class="text-2xl font-bold text-gold mb-6 flex items-center border-b border-white/10 pb-2">
+                    <span class="mr-3 text-xl">💡</span> 6. Lời khuyên thực tế từ Chuyên gia
+                </h2>
+                <div class="grid sm:grid-cols-2 gap-8">
+                    <div class="flex gap-4">
+                        <div class="text-2xl text-gold">🧥</div>
+                        <div>
+                            <h4 class="font-bold mb-1">Trang phục</h4>
+                            <p class="text-sm opacity-90">Áp dụng phương pháp layering để linh hoạt theo biên độ nhiệt.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-2xl text-gold">☂️</div>
+                        <div>
+                            <h4 class="font-bold mb-1">Vật dụng</h4>
+                            <p class="text-sm opacity-90">Luôn mang theo ô và ưu tiên giày chống thấm nước.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-2xl text-gold">💧</div>
+                        <div>
+                            <h4 class="font-bold mb-1">Sức khỏe</h4>
+                            <p class="text-sm opacity-90">Bổ sung nước và khoáng chất để tránh kiệt sức do nhiệt.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-2xl text-gold">🏠</div>
+                        <div>
+                            <h4 class="font-bold mb-1">Bảo quản</h4>
+                            <p class="text-sm opacity-90">Chuẩn bị phương án hút ẩm không gian sống và thực phẩm.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sources -->
+            <div class="mt-12 pt-6 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-[11px] text-slate-400 uppercase tracking-widest italic">
+                    Nguồn dữ liệu: NCHMF, AccuWeather, JMA (Japan Meteorological Agency)
+                </div>
+                <div class="text-[11px] text-slate-400">
+                    Mã báo cáo: TYO-2026-05-15-AI-V1
+                </div>
+            </div>
+
+        </article>
+
+        <!-- Branded Footer -->
+        <footer class="mt-16 text-center">
+            <div class="w-24 h-1 bg-gold mx-auto mb-6 opacity-40"></div>
+            <p class="text-slate-500 text-sm tracking-wide">
+                Báo cáo được tạo bởi <span class="font-bold text-navy">AI Software Development</span>
+            </p>
+            <a href="www.phamhoanganhtokens.com" target="_blank" class="text-navy font-semibold hover:underline mt-1 inline-block text-xs uppercase tracking-tighter">
+                www.phamhoanganhtokens.com
+            </a>
+        </footer>
+
+    </main>
+
+    <script>
+        // Simple script to update current date display if needed (static for this report per instructions but keeping logic)
+        const dateElement = document.getElementById('current-date');
+        // If real-time was needed: 
+        // const now = new Date();
+        // dateElement.innerText = `Ngày ${now.getDate()} tháng ${now.getMonth()+1} năm ${now.getFullYear()} | ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')} UTC+7`;
+    </script>
+</body>
+</html>
