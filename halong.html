@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Thời Tiết Tổng Hợp | AI Software Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#002147',
+                        charcoal: '#333333',
+                        slate: '#475569',
+                        eggshell: '#F9F9F9',
+                        gold: '#B8860B',
+                    },
+                    fontFamily: {
+                        'serif': ['"Times New Roman"', 'serif'],
+                        'display': ['"Playfair Display"', 'serif'],
+                        'body': ['"Lora"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F9F9F9;
+            color: #333333;
+            line-height: 1.7;
+            font-family: "Times New Roman", Times, serif;
+        }
+        .report-container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.05);
+            padding: 3rem 4rem;
+        }
+        @media (max-width: 768px) {
+            .report-container {
+                padding: 1.5rem;
+            }
+        }
+        .justify-text {
+            text-align: justify;
+        }
+        .section-divider {
+            border-bottom: 1px solid #e2e8f0;
+            margin: 2.5rem 0;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 8px 20px rgba(0,33,71,0.08);
+            transform: translateY(-2px);
+        }
+        .gold-border {
+            border-left: 4px solid #B8860B;
+        }
+        .navy-gradient {
+            background: linear-gradient(135deg, #002147 0%, #003a7a 100%);
+        }
+        /* Mobile scroll for forecast */
+        .forecast-scroll {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .forecast-scroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="py-12 px-4 md:px-0">
+
+    <div class="report-container border-t-8 border-navy">
+        
+        <!-- EXECUTIVE HEADER -->
+        <header class="mb-12 border-b pb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <h2 class="text-navy font-bold tracking-widest text-xs uppercase mb-2">AI Software Development</h2>
+                    <h1 class="text-4xl md:text-5xl font-display font-bold text-navy leading-tight">Báo Cáo Thời Tiết<br>Tổng Hợp</h1>
+                </div>
+                <div class="text-right">
+                    <p class="text-slate font-semibold uppercase tracking-wider text-sm">Vị Trí Phân Tích</p>
+                    <p class="text-2xl font-serif text-charcoal italic">Hạ Long - Quảng Ninh</p>
+                    <p class="text-sm text-slate mt-2 italic">Phát hành: 19 tháng 5, 2026 | 08:30 (UTC+7)</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- HIGHLIGHTS & WARNINGS BAR -->
+        <section class="mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-blue-50 p-6 rounded-sm border-l-4 border-blue-600 flex items-start gap-4">
+                    <span class="text-3xl">🌤️</span>
+                    <div>
+                        <h3 class="font-bold text-blue-900 uppercase text-sm tracking-wide">Tin Vui</h3>
+                        <p class="text-blue-800 text-sm italic">Tầm nhìn xa trên 10km, điều kiện biển ổn định, rất thuận lợi cho các hoạt động tham quan vịnh vào buổi sáng.</p>
+                    </div>
+                </div>
+                <div class="bg-amber-50 p-6 rounded-sm border-l-4 border-amber-500 flex items-start gap-4">
+                    <span class="text-3xl">⚠️</span>
+                    <div>
+                        <h3 class="font-bold text-amber-900 uppercase text-sm tracking-wide">Cảnh Báo</h3>
+                        <p class="text-amber-800 text-sm italic">Đề phòng lốc xoáy và gió giật mạnh trong các cơn dông nhiệt chiều tối. Chỉ số UV cực đại ở mức 10.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT BODY -->
+        <main class="space-y-12">
+            
+            <!-- 1. Tình trạng hiện tại -->
+            <section>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-2xl">📊</span>
+                    <h2 class="text-2xl font-display font-bold text-navy border-b-2 border-navy pr-8">1. Tình trạng hiện tại</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center p-4 border rounded">
+                        <p class="text-xs text-slate uppercase mb-1">Nhiệt độ</p>
+                        <p class="text-3xl font-bold text-charcoal">31°C</p>
+                        <p class="text-xs italic text-slate">Cảm giác: 36°C</p>
+                    </div>
+                    <div class="text-center p-4 border rounded">
+                        <p class="text-xs text-slate uppercase mb-1">Độ ẩm</p>
+                        <p class="text-3xl font-bold text-charcoal">78%</p>
+                        <p class="text-xs italic text-slate">Độ bão hòa cao</p>
+                    </div>
+                    <div class="text-center p-4 border rounded">
+                        <p class="text-xs text-slate uppercase mb-1">Sức gió</p>
+                        <p class="text-3xl font-bold text-charcoal">Cấp 3</p>
+                        <p class="text-xs italic text-slate">12-15 km/h</p>
+                    </div>
+                    <div class="text-center p-4 border rounded">
+                        <p class="text-xs text-slate uppercase mb-1">Tầm nhìn</p>
+                        <p class="text-3xl font-bold text-charcoal">>10km</p>
+                        <p class="text-xs italic text-slate">Sương mù nhẹ sáng</p>
+                    </div>
+                </div>
+                <p class="mt-6 justify-text italic text-charcoal px-4 gold-border bg-slate-50 py-2">
+                    Bầu trời nhiều mây, có nắng gián đoạn. Tầm nhìn xa đạt trên 10km, tuy nhiên có hiện tượng sương mù nhẹ vào sáng sớm trên mặt Vịnh.
+                </p>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 2. Dự báo ngắn hạn -->
+            <section>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-2xl">⏳</span>
+                    <h2 class="text-2xl font-display font-bold text-navy border-b-2 border-navy pr-8">2. Dự báo ngắn hạn (24-48h)</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-6 glass-card rounded-lg">
+                        <h3 class="font-bold text-navy mb-3 text-lg border-b pb-2">Ngày 20/05</h3>
+                        <p class="justify-text text-sm">Duy trì trạng thái oi nóng ban ngày. Nhiệt độ dao động từ <strong>27°C đến 33°C</strong>. Chiều tối có khả năng xuất hiện mưa rào và dông rải rác do các khối mây đối lưu phát triển mạnh. Trong cơn dông cần đề phòng lốc xoáy và gió giật mạnh trên biển.</p>
+                    </div>
+                    <div class="p-6 glass-card rounded-lg">
+                        <h3 class="font-bold text-navy mb-3 text-lg border-b pb-2">Ngày 21/05</h3>
+                        <p class="justify-text text-sm">Mây thay đổi đến nhiều mây. Nền nhiệt giảm nhẹ, cao nhất khoảng <strong>31°C</strong>. Xác suất mưa tăng lên 60%, tập trung chủ yếu vào rạng sáng và đêm.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Xu hướng hàng tuần -->
+            <section class="bg-navy p-8 rounded-lg text-white">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-2xl">📅</span>
+                    <h2 class="text-2xl font-display font-bold text-white border-b-2 border-white pr-8">3. Xu hướng hàng tuần (19/05 - 25/05)</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="space-y-2">
+                        <p class="text-blue-200 text-xs uppercase tracking-widest font-bold">Nhiệt độ</p>
+                        <p class="text-xl font-serif">26°C - 34°C</p>
+                        <p class="text-sm opacity-80 italic">Phổ biến trong tuần</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-blue-200 text-xs uppercase tracking-widest font-bold">Khả năng mưa</p>
+                        <p class="text-xl font-serif">Tăng dần cuối tuần</p>
+                        <p class="text-sm opacity-80 italic">Giai đoạn chuyển mùa</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-blue-200 text-xs uppercase tracking-widest font-bold">Chỉ số UV</p>
+                        <p class="text-xl font-serif">8 - 10 (Rất cao)</p>
+                        <p class="text-sm opacity-80 italic">Nguy hiểm giữa trưa</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4 & 5. Phân tích dài hạn & Gió mùa -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-2xl">🔭</span>
+                        <h2 class="text-xl font-display font-bold text-navy border-b-2 border-navy pr-8">4. Xu hướng hàng tháng</h2>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="justify-text">
+                            <span class="font-bold text-navy">Tháng 5:</span> Tháng chuyển tiếp sang mùa hè chính thức. Nền nhiệt trung bình cao hơn so với tháng 4 từ 2-3°C. Xuất hiện các đợt nắng nóng xen kẽ mưa rào.
+                        </li>
+                        <li class="justify-text">
+                            <span class="font-bold text-navy">Tháng 6:</span> Cao điểm nắng nóng gay gắt. Bắt đầu mùa bão lũ tại Vịnh Bắc Bộ. Cần theo dõi sát các áp thấp nhiệt đới.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-2xl">🌬️</span>
+                        <h2 class="text-xl font-display font-bold text-navy border-b-2 border-navy pr-8">5. Phân tích theo mùa</h2>
+                    </div>
+                    <div class="space-y-4 text-sm justify-text">
+                        <p>Khu vực hiện chịu ảnh hưởng chủ đạo của đới gió <strong>Đông Nam</strong> mang theo hơi ẩm lớn, gây cảm giác oi bức đặc trưng. Gió mùa Tây Nam bắt đầu hoạt động mạnh, có thể gây hiệu ứng phơn khô hạn cục bộ.</p>
+                        <p>Do địa hình lòng chảo của Vịnh, các hiện tượng dông lốc thường xảy ra rất nhanh vào buổi chiều tối. Giai đoạn này biển khá êm nhưng cần cảnh giác với thời tiết cực đoan ngắn hạn.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 6. Lời khuyên thực tế -->
+            <section>
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="text-2xl">💡</span>
+                    <h2 class="text-2xl font-display font-bold text-navy border-b-2 border-navy pr-8">6. Khuyến nghị chiến lược</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-slate-50 border border-slate-200 rounded shadow-sm">
+                        <h4 class="font-bold text-navy mb-4 flex items-center gap-2">
+                            <span>🚢</span> Khách Du Lịch
+                        </h4>
+                        <ul class="text-sm space-y-3 list-disc pl-4 italic opacity-90">
+                            <li>Ưu tiên Kayak sáng sớm để tránh dông nhiệt chiều.</li>
+                            <li>Trang bị kem chống nắng, mũ rộng vành đầy đủ.</li>
+                            <li>Kiểm tra lịch trình tàu trước khi khởi hành.</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-slate-50 border border-slate-200 rounded shadow-sm">
+                        <h4 class="font-bold text-navy mb-4 flex items-center gap-2">
+                            <span>🏠</span> Người Địa Phương
+                        </h4>
+                        <ul class="text-sm space-y-3 list-disc pl-4 italic opacity-90">
+                            <li>Gia cố mái che, hệ thống thoát nước trước mùa bão.</li>
+                            <li>Tránh làm việc ngoài trời từ 11:00 - 15:00.</li>
+                            <li>Bổ sung đủ nước và điện giải hàng ngày.</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-slate-50 border border-slate-200 rounded shadow-sm">
+                        <h4 class="font-bold text-navy mb-4 flex items-center gap-2">
+                            <span>⚓</span> Giao Thông Thủy
+                        </h4>
+                        <ul class="text-sm space-y-3 list-disc pl-4 italic opacity-90">
+                            <li>Đảm bảo trang thiết bị cứu hộ đạt chuẩn.</li>
+                            <li>Theo dõi sát bản tin ngư trường và dông mạnh.</li>
+                            <li>Sẵn sàng phương án trú tránh an toàn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- SOURCES -->
+        <footer class="mt-16 pt-8 border-t border-slate-100">
+            <div class="flex flex-col md:flex-row justify-between items-center text-slate text-xs uppercase tracking-widest gap-4">
+                <div class="flex gap-4">
+                    <span>Nguồn dữ liệu: NCHMF</span>
+                    <span class="text-slate-300">|</span>
+                    <span>AccuWeather</span>
+                    <span class="text-slate-300">|</span>
+                    <span>AI Analysis</span>
+                </div>
+                <div class="text-center md:text-right">
+                    Mã báo cáo: #HL-QN-2026-05-19
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- BRANDED FOOTER -->
+    <div class="max-w-[950px] mx-auto mt-12 mb-12 text-center">
+        <a href="www.phamhoanganhtokens.com" target="_blank" class="text-slate hover:text-navy transition-colors text-sm font-serif italic">
+            Báo cáo được tạo bởi AI Software Development - www.phamhoanganhtokens.com
+        </a>
+    </div>
+
+</body>
+</html>
