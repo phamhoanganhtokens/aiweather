@@ -3,95 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Software Development</title>
+    <title>Báo Cáo Thời Tiết Tổng Hợp - AI Software Development</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
-
-        :root {
-            --navy-blue: #002147;
-            --charcoal: #333333;
-            --eggshell: #F9F9F9;
-            --slate: #475569;
-            --gold-accent: #B8860B;
-        }
-
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            background-color: var(--eggshell);
-            color: var(--charcoal);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-
-        .report-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            padding: 4rem 3rem;
-        }
-
-        @media (max-width: 640px) {
-            .report-container {
-                padding: 2rem 1.5rem;
-            }
-        }
-
-        .justified-text {
-            text-align: justify;
-            text-justify: inter-word;
-        }
-
-        .section-divider {
-            border-bottom: 1px solid #e2e8f0;
-            margin: 2.5rem 0;
-            position: relative;
-        }
-
-        .section-divider::after {
-            content: "";
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 80px;
-            border-bottom: 2px solid var(--navy-blue);
-        }
-
-        .highlight-card {
-            border-left: 4px solid var(--navy-blue);
-            background: rgba(0, 33, 71, 0.03);
-            transition: transform 0.2s ease;
-        }
-
-        .forecast-card {
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .forecast-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .glass-header {
-            background: var(--navy-blue);
-            color: white;
-        }
-
-        h1, h2, h3 {
-            color: var(--navy-blue);
-            font-weight: bold;
-        }
-
-        .source-text {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            font-style: italic;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -99,229 +13,250 @@
                     colors: {
                         navy: '#002147',
                         charcoal: '#333333',
+                        slate: '#475569',
                         eggshell: '#F9F9F9',
                         gold: '#B8860B',
+                    },
+                    fontFamily: {
+                        serif: ['Times New Roman', 'Times', 'serif'],
+                        display: ['Playfair Display', 'serif'],
                     }
                 }
             }
         }
     </script>
+    <style>
+        body {
+            background-color: #F9F9F9;
+            color: #333333;
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+        }
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 3rem;
+            border-top: 8px solid #002147;
+        }
+        .justified-text {
+            text-align: justify;
+        }
+        .section-divider {
+            border-bottom: 1px solid #e2e8f0;
+            margin: 2rem 0;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        @media (max-width: 640px) {
+            .report-container {
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="antialiased">
+<body class="p-2 md:p-8">
 
-    <!-- Executive Header -->
-    <header class="glass-header w-full py-12 px-6 text-center shadow-lg">
-        <div class="max-w-4xl mx-auto">
-            <p class="uppercase tracking-widest text-sm mb-4 opacity-80">AI Software Development Presents</p>
-            <h1 class="text-4xl md:text-5xl font-serif mb-4 leading-tight">BÁO CÁO THỜI TIẾT TỔNG HỢP</h1>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-lg border-t border-blue-800 pt-6 mt-6">
-                <span class="font-bold">📍 Thành phố Hồ Chí Minh</span>
-                <span class="hidden md:inline">|</span>
-                <span>Thứ Hai, 18 Tháng 05, 2026</span>
-                <span class="hidden md:inline">|</span>
-                <span class="font-mono text-sm">08:00 AM (UTC+7)</span>
+    <div class="report-container">
+        <!-- Executive Header -->
+        <header class="mb-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-navy pb-6">
+                <div>
+                    <p class="text-navy font-bold tracking-widest text-sm uppercase mb-2">AI Software Development</p>
+                    <h1 class="text-4xl md:text-5xl font-display text-navy mb-2">Báo Cáo Thời Tiết Tổng Hợp</h1>
+                    <p class="text-slate italic">Khu vực: Thành phố Hồ Chí Minh</p>
+                </div>
+                <div class="mt-4 md:mt-0 text-right">
+                    <p class="text-sm text-slate uppercase tracking-tighter">Ngày báo cáo</p>
+                    <p class="text-xl font-bold text-navy">25 Tháng 05, 2026</p>
+                    <p class="text-xs text-slate">Múi giờ: UTC+7 (Giờ Đông Dương)</p>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main class="report-container my-12">
-        
         <!-- Summary Highlight Bar -->
-        <section class="mb-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="highlight-card p-6 rounded-r-lg">
-                    <h3 class="text-sm uppercase tracking-wider text-blue-800 mb-2 font-bold">✨ Tin vui</h3>
-                    <p class="text-sm italic">Tầm nhìn xa đạt 10km, điều kiện lý tưởng cho các chuyến bay sáng sớm và hoạt động giao thương cảng biển.</p>
+        <section class="mb-10">
+            <div class="bg-blue-50 border-l-4 border-navy p-6 rounded-r-lg shadow-sm">
+                <div class="flex items-center mb-2">
+                    <span class="text-2xl mr-3">📢</span>
+                    <h2 class="text-xl font-bold text-navy uppercase tracking-wide">Tin vui & Cảnh báo quan trọng</h2>
                 </div>
-                <div class="highlight-card p-6 rounded-r-lg border-l-amber-500 bg-amber-50/30">
-                    <h3 class="text-sm uppercase tracking-wider text-amber-700 mb-2 font-bold">⚠️ Cảnh báo</h3>
-                    <p class="text-sm italic">Nguy cơ ngập cục bộ chiều tối do mưa dông nhiệt cường độ mạnh và triều cường đang có xu hướng dâng.</p>
-                </div>
+                <p class="text-navy font-medium italic justified-text">
+                    Hệ thống ghi nhận gió mùa Tây Nam đang hoạt động mạnh. Lưu ý: Khả năng mưa dông diện rộng vào chiều tối đạt mức 70%. Cần đề phòng sấm sét và gió giật mạnh trong khu vực đô thị.
+                </p>
             </div>
         </section>
 
-        <!-- Current Status -->
-        <section id="hien-tai">
-            <h2 class="text-2xl mb-4 flex items-center gap-2">
-                <span>📊</span> 1. Tình trạng hiện tại
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="p-4 bg-gray-50 rounded text-center border-b-2 border-navy">
-                    <p class="text-xs text-gray-500 uppercase">Nhiệt độ</p>
-                    <p class="text-2xl font-bold">29°C</p>
-                    <p class="text-xs">(Cảm giác 33°C)</p>
+        <!-- Main Report Body -->
+        <main class="space-y-12">
+            
+            <!-- 1. Tình trạng hiện tại -->
+            <section id="hien-tai">
+                <h3 class="text-2xl font-bold text-navy flex items-center mb-4 border-b border-slate/20 pb-2">
+                    <span class="mr-2">📍</span> 1. TÌNH TRẠNG HIỆN TẠI
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="glass-card p-4 rounded-lg flex flex-col justify-center">
+                        <p class="text-slate text-sm uppercase">Nhiệt độ thực tế / Cảm nhận</p>
+                        <p class="text-3xl font-bold text-navy">31°C <span class="text-lg font-normal text-slate">/ 36°C</span></p>
+                    </div>
+                    <div class="glass-card p-4 rounded-lg flex flex-col justify-center">
+                        <p class="text-slate text-sm uppercase">Độ ẩm & Bầu trời</p>
+                        <p class="text-xl font-bold text-navy">78% - Nhiều mây, nắng gián đoạn</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-lg flex flex-col justify-center">
+                        <p class="text-slate text-sm uppercase">Gió Tây Nam</p>
+                        <p class="text-xl font-bold text-navy">10-15 km/h</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-lg flex flex-col justify-center">
+                        <p class="text-slate text-sm uppercase">Chất lượng không khí (AQI)</p>
+                        <p class="text-xl font-bold text-green-700">65 - 80 (Trung bình)</p>
+                    </div>
                 </div>
-                <div class="p-4 bg-gray-50 rounded text-center border-b-2 border-navy">
-                    <p class="text-xs text-gray-500 uppercase">Độ ẩm</p>
-                    <p class="text-2xl font-bold">78%</p>
-                    <p class="text-xs">Rất ẩm</p>
+                <p class="mt-4 justified-text italic text-slate">
+                    Ghi chú: Độ ẩm cao tạo cảm giác oi bức đáng kể trong khung giờ trưa. Những người nhạy cảm nên hạn chế các hoạt động thể chất cường độ cao ngoài trời.
+                </p>
+            </section>
+
+            <!-- 2. Dự báo ngắn hạn -->
+            <section id="du-bao-ngan-han">
+                <h3 class="text-2xl font-bold text-navy flex items-center mb-4 border-b border-slate/20 pb-2">
+                    <span class="mr-2">⛈️</span> 2. DỰ BÁO NGẮN HẠN (24 - 48 GIỜ TỚI)
+                </h3>
+                <div class="space-y-4 justified-text">
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded">
+                        <p class="font-bold text-navy mb-1">Chiều tối ngày 25/05:</p>
+                        <p>Khả năng rất cao (khoảng 70%) sẽ xuất hiện mưa rào và dông diện rộng sau 15h00. Cần đặc biệt đề phòng các hiện tượng sấm sét, gió giật mạnh và mưa đá cục bộ trong cơn dông.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded">
+                        <p class="font-bold text-navy mb-1">Ngày 26/05:</p>
+                        <p>Thời tiết tiếp tục duy trì trạng thái sáng nắng, chiều mưa. Mưa có xu hướng xuất hiện sớm hơn so với ngày hôm trước. Lượng mưa dự báo đạt mức 15-30mm. Nhiệt độ thấp nhất ban đêm khoảng 25°C, mang lại cảm giác mát mẻ.</p>
+                    </div>
                 </div>
-                <div class="p-4 bg-gray-50 rounded text-center border-b-2 border-navy">
-                    <p class="text-xs text-gray-500 uppercase">Gió Tây Nam</p>
-                    <p class="text-2xl font-bold">15 <span class="text-sm">km/h</span></p>
-                    <p class="text-xs">Ổn định</p>
+            </section>
+
+            <!-- 3. Phân tích tuần tới & Forecast Grid -->
+            <section id="phan-tich-tuan">
+                <h3 class="text-2xl font-bold text-navy flex items-center mb-4 border-b border-slate/20 pb-2">
+                    <span class="mr-2">📅</span> 3. PHÂN TÍCH TUẦN TỚI (25/05 - 31/05)
+                </h3>
+                <p class="justified-text mb-6">
+                    Trong tuần cuối của tháng 5, TP.HCM chịu ảnh hưởng chủ yếu bởi rãnh thấp ở phía Nam kết hợp với đới gió Tây Nam ổn định. Tần suất mưa dông sẽ diễn ra hầu như hàng ngày, tập trung chủ yếu vào khung giờ chiều tối. Nền nhiệt dao động ổn định từ 25°C đến 34°C. Độ ẩm trung bình tuần duy trì ở mức cao (trên 80%), gây ra tình trạng oi ngộp kéo dài trước mỗi đợt mưa.
+                </p>
+                
+                <!-- Forecast Mini Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="glass-card p-4 rounded text-center">
+                        <p class="text-xs font-bold text-slate">TỨ 2</p>
+                        <p class="text-xl">⛈️</p>
+                        <p class="text-sm font-bold">31°/26°</p>
+                    </div>
+                    <div class="glass-card p-4 rounded text-center">
+                        <p class="text-xs font-bold text-slate">TỨ 3</p>
+                        <p class="text-xl">🌧️</p>
+                        <p class="text-sm font-bold">30°/25°</p>
+                    </div>
+                    <div class="glass-card p-4 rounded text-center">
+                        <p class="text-xs font-bold text-slate">TỨ 4</p>
+                        <p class="text-xl">⛈️</p>
+                        <p class="text-sm font-bold">32°/26°</p>
+                    </div>
+                    <div class="glass-card p-4 rounded text-center border-navy">
+                        <p class="text-xs font-bold text-slate">TỨ 5-CN</p>
+                        <p class="text-xl">🌦️</p>
+                        <p class="text-sm font-bold">Mưa Rải Rác</p>
+                    </div>
                 </div>
-                <div class="p-4 bg-gray-50 rounded text-center border-b-2 border-navy">
-                    <p class="text-xs text-gray-500 uppercase">Chỉ số UV</p>
-                    <p class="text-2xl font-bold">4/11</p>
-                    <p class="text-xs">Đang tăng</p>
+            </section>
+
+            <!-- 4. Xu hướng tháng tới -->
+            <section id="xu-huong-thang">
+                <h3 class="text-2xl font-bold text-navy flex items-center mb-4 border-b border-slate/20 pb-2">
+                    <span class="mr-2">📈</span> 4. XU HƯỚNG THÁNG TỚI (THÁNG 06/2026)
+                </h3>
+                <div class="justified-text space-y-3">
+                    <p>Bước vào tháng 6, TP.HCM chính thức tiến sâu vào cao điểm mùa mưa. <strong>Lượng mưa</strong> dự báo sẽ cao hơn trung bình nhiều năm từ 10-20%. Có thể xuất hiện các đợt mưa lớn liên tục kéo dài nhiều ngày do tác động của các xoáy thuận nhiệt đới hoặc nhiễu động gió Đông.</p>
+                    <p><strong>Nhiệt độ:</strong> Các đợt nắng nóng gay gắt trên 36°C sẽ giảm hẳn. Nhiệt độ trung bình tháng duy trì khoảng 28°C - 29°C. Tần suất ngập cục bộ do mưa lớn kết hợp triều cường sẽ tăng cao tại các khu vực trũng thấp.</p>
                 </div>
-            </div>
-            <p class="justified-text text-gray-700">
-                Trời nhiều mây, nắng gián đoạn. Tầm nhìn xa tốt, đạt khoảng 10km. Chỉ số UV đang ở mức trung bình nhưng dự kiến sẽ đạt đỉnh vào khung giờ 11:30 - 13:30, khuyến nghị các biện pháp bảo vệ da phù hợp.
+            </section>
+
+            <!-- 5. Phân tích chuyên sâu Gió Mùa -->
+            <section id="chuyen-sau" class="bg-navy/5 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-navy flex items-center mb-4">
+                    <span class="mr-2">🌬️</span> 5. PHÂN TÍCH GIÓ MÙA TÂY NAM
+                </h3>
+                <div class="justified-text space-y-4">
+                    <p>Gió mùa Tây Nam hiện đã thiết lập trạng thái hoạt động mạnh mẽ trên khu vực Nam Bộ. Đặc điểm chính là mang theo lượng hơi ẩm dồi dào từ Ấn Độ Dương và Vịnh Thái Lan, tạo nên chu kỳ thời tiết "sáng nắng - chiều mưa" điển hình.</p>
+                    <p>Sự tương tác mạnh mẽ giữa bức xạ mặt trời buổi sáng và luồng gió ẩm buổi chiều thường tạo ra những cơn dông nhiệt mạnh, kèm theo các hiện tượng thời tiết nguy hiểm như lốc xoáy và sét. Về mặt thủy văn, lưu lượng nước trên hệ thống sông Sài Gòn - Đồng Nai bắt đầu tăng tiến, cần lưu ý biến động của thủy triều ảnh hưởng đến khả năng thoát nước đô thị.</p>
+                </div>
+            </section>
+
+            <!-- 6. Lời khuyên thực tế -->
+            <section id="loi-khuyen">
+                <h3 class="text-2xl font-bold text-navy flex items-center mb-4 border-b border-slate/20 pb-2">
+                    <span class="mr-2">💡</span> 6. LỜI KHUYÊN THỰC TẾ
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="space-y-2">
+                        <p class="font-bold text-navy flex items-center"><span class="mr-2">🩺</span> Sức khỏe</p>
+                        <p class="text-sm justified-text">Tích cực dọn dẹp vệ sinh, diệt lăng quăng để phòng ngừa sốt xuất huyết. Bổ sung vitamin để tăng cường đề kháng khi thời tiết thay đổi đột ngột.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="font-bold text-navy flex items-center"><span class="mr-2">🚗</span> Giao thông</p>
+                        <p class="text-sm justified-text">Luôn chuẩn bị sẵn áo mưa. Hạn chế di chuyển qua các tuyến đường trọng điểm hay ngập (Quận 7, Quận 8, TP. Thủ Đức) vào giờ tan tầm.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="font-bold text-navy flex items-center"><span class="mr-2">🏠</span> An toàn</p>
+                        <p class="text-sm justified-text">Kiểm tra lại hệ thống điện ngoài trời, biển quảng cáo và cây xanh quanh nhà để đảm bảo an toàn trước gió giật mạnh trong dông.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Sources Section -->
+        <section class="mt-12 pt-6 border-t border-slate-100">
+            <p class="text-[10px] text-slate uppercase tracking-widest text-center">
+                Nguồn dữ liệu tham khảo: NCHMF (Trung tâm Dự báo KTTV Quốc gia), AccuWeather, Meteorological Data Services.
             </p>
         </section>
 
-        <div class="section-divider"></div>
-
-        <!-- Short Term Forecast -->
-        <section id="ngan-han">
-            <h2 class="text-2xl mb-6 flex items-center gap-2">
-                <span>⏱️</span> 2. Dự báo ngắn hạn (24-48 giờ tới)
-            </h2>
-            <div class="space-y-6">
-                <div class="flex flex-col md:flex-row gap-6 items-start">
-                    <div class="md:w-1/4 font-bold text-navy py-2 border-l-2 border-navy pl-4">Trong 24 giờ tới</div>
-                    <div class="md:w-3/4 justified-text">
-                        Buổi sáng trời nắng nóng, nhiệt độ cao nhất đạt mức 35°C vào khoảng 13:00 - 14:00. Từ sau 16:00, mây dông phát triển mạnh, có khả năng cao xuất hiện mưa rào và dông diện rộng. Trong cơn dông cần đặc biệt đề phòng lốc xoáy và gió giật mạnh gây nguy hiểm cho công trình tạm.
-                    </div>
-                </div>
-                <div class="flex flex-col md:flex-row gap-6 items-start">
-                    <div class="md:w-1/4 font-bold text-navy py-2 border-l-2 border-navy pl-4">Trong 48 giờ tới</div>
-                    <div class="md:w-3/4 justified-text">
-                        Hình thái thời tiết tương tự được duy trì. Tuy nhiên, lượng mưa có xu hướng tăng vào chiều tối, có thể gây ngập cục bộ tại các vùng trũng thấp và các tuyến đường thoát nước kém trong nội đô. Các doanh nghiệp vận tải nên cân nhắc lộ trình sớm hơn.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <!-- Weekly Forecast Grid -->
-        <section id="hang-tuan">
-            <h2 class="text-2xl mb-6 flex items-center gap-2">
-                <span>📅</span> 3. Dự báo hàng tuần (18/05 - 24/05/2026)
-            </h2>
-            <div class="overflow-x-auto pb-4">
-                <div class="flex gap-4 w-max md:w-full md:grid md:grid-cols-4">
-                    <div class="forecast-card p-4 rounded bg-white w-48 md:w-auto">
-                        <p class="font-bold border-b mb-2 pb-1">T2 - T4</p>
-                        <p class="text-xs text-gray-500 uppercase">Chuyển mùa</p>
-                        <p class="text-lg font-bold text-orange-600">26°C - 35°C</p>
-                        <p class="text-sm mt-2">Nắng gắt trưa, dông chiều.</p>
-                    </div>
-                    <div class="forecast-card p-4 rounded bg-white w-48 md:w-auto">
-                        <p class="font-bold border-b mb-2 pb-1">T5 - T6</p>
-                        <p class="text-xs text-gray-500 uppercase">Mưa diện rộng</p>
-                        <p class="text-lg font-bold text-blue-600">27°C - 33°C</p>
-                        <p class="text-sm mt-2">Xác suất mưa 80%. Giảm nhiệt.</p>
-                    </div>
-                    <div class="forecast-card p-4 rounded bg-white w-48 md:w-auto">
-                        <p class="font-bold border-b mb-2 pb-1">Thứ 7</p>
-                        <p class="text-xs text-gray-500 uppercase">Áp thấp</p>
-                        <p class="text-lg font-bold text-blue-800">26°C - 31°C</p>
-                        <p class="text-sm mt-2">Mưa kéo dài từ đầu chiều.</p>
-                    </div>
-                    <div class="forecast-card p-4 rounded bg-white w-48 md:w-auto border-navy bg-navy/5">
-                        <p class="font-bold border-b mb-2 pb-1">Chủ Nhật</p>
-                        <p class="text-xs text-gray-500 uppercase">Dịu mát</p>
-                        <p class="text-lg font-bold text-navy">25°C - 30°C</p>
-                        <p class="text-sm mt-2">Trời mát, mưa rải rác.</p>
-                    </div>
-                </div>
-            </div>
-            <p class="justified-text mt-6 text-gray-700">
-                Đây là tuần cao điểm của giai đoạn chuyển mùa. Nắng nóng gay gắt xuất hiện vào buổi sáng và trưa. Mưa dông xảy ra đều đặn vào các buổi chiều tối (xác suất mưa 70-80%). Lưu ý sự xuất hiện của rãnh áp thấp trục đi qua khu vực Nam Bộ vào cuối tuần.
+        <!-- Branded Footer -->
+        <footer class="mt-8 text-center py-6 border-t-2 border-slate-100">
+            <p class="text-sm font-medium text-slate">
+                Báo cáo được tạo bởi <span class="text-navy font-bold">AI Software Development</span>
             </p>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <!-- Monthly & Seasonal -->
-        <section id="xu-huong" class="grid md:grid-cols-2 gap-12">
-            <div>
-                <h2 class="text-xl mb-4 font-bold border-l-4 border-navy pl-3 uppercase tracking-tight">
-                    📈 4. Xu hướng hàng tháng
-                </h2>
-                <div class="space-y-4 justified-text">
-                    <p><strong class="text-navy">Tháng 5/2026:</strong> Tiếp tục trạng thái nắng mưa xen kẽ. Tổng lượng mưa dự báo cao hơn trung bình nhiều năm khoảng 10-15% do hiện tượng La Niña nhẹ tác động.</p>
-                    <p><strong class="text-navy">Tháng 6/2026:</strong> Thành phố chính thức bước vào mùa mưa ổn định. Nhiệt độ trung bình giảm nhẹ, dao động từ 27°C - 33°C, giảm bớt cảm giác oi bức của giai đoạn giao mùa.</p>
-                </div>
-            </div>
-            <div>
-                <h2 class="text-xl mb-4 font-bold border-l-4 border-navy pl-3 uppercase tracking-tight">
-                    🌬️ 5. Phân tích Gió Mùa
-                </h2>
-                <div class="space-y-4 justified-text">
-                    <p>Gió mùa Tây Nam đã bắt đầu hoạt động ổn định trên khu vực Nam Bộ. Luồng gió mang hơi ẩm từ Ấn Độ Dương và Biển Andaman vào, gặp địa hình và nhiệt độ cao tạo nên các khối mây đối lưu mạnh.</p>
-                    <p>Đặc trưng là "mưa dông nhiệt", đến nhanh, cường độ lớn nhưng nhanh tạnh. Năm 2026 ghi nhận gió mùa hoạt động sớm và mạnh hơn bình thường.</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="section-divider"></div>
-
-        <!-- Practical Advice -->
-        <section id="loi-khuyen">
-            <h2 class="text-2xl mb-8 flex items-center gap-2">
-                <span>💡</span> 6. Lời khuyên thực tế từ Chuyên gia
-            </h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="space-y-4">
-                    <h3 class="text-lg font-bold text-navy flex items-center gap-2">
-                        🏠 Đối với người dân
-                    </h3>
-                    <ul class="space-y-3 justified-text">
-                        <li class="flex gap-2"><span>•</span> <span>Nên hoàn thành các công việc ngoài trời trước 15:00 hàng ngày để tránh mưa dông và sấm sét.</span></li>
-                        <li class="flex gap-2"><span>•</span> <span>Vệ sinh hệ thống thoát nước để phòng tránh ngập úng và muỗi vằn phát triển (mùa sốt xuất huyết).</span></li>
-                        <li class="flex gap-2"><span>•</span> <span>Kiểm tra độ an toàn của mái tôn, biển quảng cáo trước các đợt gió giật mạnh.</span></li>
-                    </ul>
-                </div>
-                <div class="space-y-4">
-                    <h3 class="text-lg font-bold text-navy flex items-center gap-2">
-                        🎒 Đối với du khách
-                    </h3>
-                    <ul class="space-y-3 justified-text">
-                        <li class="flex gap-2"><span>•</span> <span>Luôn mang theo vật dụng che mưa (ô, áo mưa) khi di chuyển vào buổi chiều.</span></li>
-                        <li class="flex gap-2"><span>•</span> <span>Sử dụng kem chống nắng và mũ rộng vành vào buổi sáng để bảo vệ da trước chỉ số UV cao.</span></li>
-                        <li class="flex gap-2"><span>•</span> <span>Hạn chế di chuyển bằng xe máy trong thời điểm mưa lớn để tránh các đoạn đường ngập và kẹt xe.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sources -->
-        <footer class="mt-16 pt-8 border-t border-gray-100">
-            <div class="flex justify-between items-center">
-                <div class="source-text">
-                    Nguồn dữ liệu: NCHMF, AccuWeather, ECMWF, AI Analysis Engine v4.2.
-                </div>
-                <div class="text-xs text-gray-400">
-                    ID Báo Cáo: #HCM-2026-0518-A
-                </div>
-            </div>
+            <a href="www.phamhoanganhtokens.com" target="_blank" class="text-xs text-navy/60 hover:text-navy transition-colors">
+                www.phamhoanganhtokens.com
+            </a>
         </footer>
-    </main>
-
-    <!-- Branded Footer -->
-    <div class="w-full py-8 text-center bg-white border-t border-gray-200">
-        <p class="text-navy font-serif text-sm">
-            Báo cáo được tạo bởi <span class="font-bold">AI Software Development</span> - 
-            <a href="https://www.phamhoanganhtokens.com" target="_blank" class="hover:underline text-blue-600">www.phamhoanganhtokens.com</a>
-        </p>
     </div>
 
     <script>
-        // Subtle animation for header
+        // Simple animation for elements on load
         document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('header');
-            header.style.opacity = '0';
-            header.style.transition = 'opacity 1s ease-out';
-            setTimeout(() => {
-                header.style.opacity = '1';
-            }, 100);
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(10px)';
+                section.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 100);
+            });
         });
     </script>
 </body>
 </html>
-
