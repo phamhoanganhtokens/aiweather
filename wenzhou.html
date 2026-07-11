@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Thời Tiết Tổng Hợp | AI Software Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Lora', 'Times New Roman', serif;
+            background-color: #F9F9F9;
+            color: #333333;
+            line-height: 1.8;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #002147;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .justify-text {
+            text-align: justify;
+        }
+
+        .section-divider {
+            border-bottom: 1px solid #e2e8f0;
+            margin: 2rem 0;
+        }
+
+        .highlight-alert {
+            background-color: #fffbeb;
+            border-left: 4px solid #d97706;
+        }
+
+        .highlight-info {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+        }
+
+        .forecast-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="py-10 px-4 md:px-8">
+
+    <main class="report-container p-8 md:p-16">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <p class="text-sm tracking-widest uppercase text-blue-900 font-bold mb-2">AI Software Development</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Báo Cáo Thời Tiết Tổng Hợp</h1>
+            <div class="inline-block px-6 py-2 border-t border-b border-gray-200">
+                <p class="text-gray-600 font-medium">Vị trí: Ôn Châu | Ngày: 11 tháng 07 năm 2026</p>
+            </div>
+        </header>
+
+        <!-- Summary Highlight Bar -->
+        <section class="mb-12">
+            <div class="highlight-alert p-6 mb-6">
+                <h3 class="text-xl font-bold mb-2">⚠️ Cảnh báo khẩn cấp: Siêu bão Bavi</h3>
+                <p class="justify-text">Dự kiến đổ bộ vào sáng sớm Chủ Nhật. Lượng mưa cực lớn (175mm-380mm), gió giật 150km/h. Nguy cơ ngập lụt và sạt lở đất ở mức báo động cao.</p>
+            </div>
+            <div class="highlight-info p-6">
+                <h3 class="text-xl font-bold mb-2">☀️ Tình hình hiện tại</h3>
+                <p class="justify-text">Trời nhiều mây, mưa lớn diện rộng. Nhiệt độ trạm đo 27°C, nhưng độ ẩm cao (79%) khiến cảm giác thực tế đạt 35°C.</p>
+            </div>
+        </section>
+
+        <!-- Weekly Forecast Grid -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">📅 Dự báo hàng tuần</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="forecast-card p-4 border border-gray-200 rounded-lg">
+                    <p class="font-bold">Chủ Nhật: Bão đổ bộ</p>
+                    <p class="text-sm">Mưa dữ dội, gió giật mạnh.</p>
+                </div>
+                <div class="forecast-card p-4 border border-gray-200 rounded-lg">
+                    <p class="font-bold">Thứ Hai: Suy yếu</p>
+                    <p class="text-sm">Bão di chuyển, không khí oi bức.</p>
+                </div>
+                <div class="forecast-card p-4 border border-gray-200 rounded-lg">
+                    <p class="font-bold">Thứ Ba - Tư: Mưa dông</p>
+                    <p class="text-sm">Hoàn lưu còn sót lại gây mưa rải rác.</p>
+                </div>
+                <div class="forecast-card p-4 border border-gray-200 rounded-lg">
+                    <p class="font-bold">Thứ Năm - Bảy: Ổn định</p>
+                    <p class="text-sm">Thời tiết cải thiện, trời nắng dần.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Analytical Sections -->
+        <section class="space-y-8">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">📈 Xu hướng hàng tháng</h2>
+                <p class="justify-text">Tháng 7 tại Ôn Châu là giai đoạn nóng và ẩm ướt với nhiệt độ trung bình khoảng 34°C và lượng mưa trung bình đạt 324mm. Theo quy luật khí hậu, tháng 8 sẽ là thời điểm nắng nóng đỉnh điểm trong năm.</p>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-4">🌬️ Phân tích theo mùa</h2>
+                <p class="justify-text">Khu vực hiện đang nằm trong giai đoạn cao điểm của mùa mưa Tây Nam. Gió mùa Tây Nam hoạt động mạnh mẽ đang tiếp thêm nguồn hơi ẩm dồi dào cho siêu bão Bavi, biến đây trở thành một cơn bão có độ ẩm cực cao, làm gia tăng đáng kể rủi ro gây mưa lũ lịch sử và lũ quét.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Advice Section -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6">🛡️ Lời khuyên thực tế</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <p><strong>🏠 Sơ tán:</strong> Chủ động thực hiện sơ tán theo yêu cầu của chính quyền địa phương, đặc biệt tại vùng trũng thấp hoặc ven biển.</p>
+                    <p><strong>📦 Dự trữ:</strong> Chuẩn bị nhu yếu phẩm (thức ăn, nước uống, thuốc men, đèn pin) đủ dùng trong ít nhất 3 ngày.</p>
+                </div>
+                <div class="space-y-4">
+                    <p><strong>🛠️ Gia cố:</strong> Kiểm tra và chằng chống nhà cửa, di dời hoặc cố định vật dụng ngoài trời để tránh gió cuốn.</p>
+                    <p><strong>🚫 Di chuyển:</strong> Tuyệt đối hủy bỏ mọi lịch trình du lịch và di chuyển không thiết yếu trong thời gian bão đổ bộ.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-16 pt-8 border-t text-center text-gray-500 text-sm italic">
+            <p class="mb-2">Nguồn dữ liệu: NCHMF, AccuWeather.</p>
+            <p>Báo cáo được tạo bởi AI Software Development - www.phamhoanganhtokens.com</p>
+        </footer>
+    </main>
+
+</body>
+</html>
